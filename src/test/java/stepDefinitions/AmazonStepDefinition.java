@@ -23,8 +23,8 @@ public class AmazonStepDefinition {
         String ProjDir = System.getProperty("user.dir");
         System.setProperty("webdriver.chrome.driver", ProjDir+"/src/test/resources/drivers/chromedriver");
         driver = new ChromeDriver();
-        driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
         System.out.println("Before SetUp 1");
     }
 
