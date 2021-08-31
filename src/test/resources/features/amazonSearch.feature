@@ -1,9 +1,9 @@
 Feature: Validate search functionality
 
   Background: users launches webpage
-    Given amazon webpage is launched
+    Given amazon webpage is launched in "firefox"
 
-  @SanityFlow
+  @RegressionFlow
   Scenario Outline: Search for a product and validate the results
     When user enters a product name"<product name>" in the search box
     And clicks on search button

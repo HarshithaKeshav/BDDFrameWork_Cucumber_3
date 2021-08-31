@@ -1,7 +1,7 @@
 Feature: Validate search functionality
 
   Background: users launches webpage
-    Given amazon webpage is launched
+    Given amazon webpage is launched in "chrome"
 
   @SanityFlow
   Scenario Outline: Search for a product and validate the results

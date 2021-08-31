@@ -1,30 +1,35 @@
 package stepDefinitions;
 
+import base.DriverManager;
+import com.aventstack.extentreports.reporter.FileUtil;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pages.AmazonHomePage_PF;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class AmazonStepDefinition {
 
     WebDriver driver;
     AmazonHomePage_PF amazonHomePage_pf;
+    DriverManager driverManager = new DriverManager();
 
     @Before
     public void setUp(){
-        String ProjDir = System.getProperty("user.dir");
-        System.setProperty("webdriver.chrome.driver", ProjDir+"/src/test/resources/drivers/chromedriver");
-        driver = new ChromeDriver();
-        driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
+
         System.out.println("Before SetUp 1");
     }
 
@@ -75,15 +80,26 @@ public class AmazonStepDefinition {
         System.out.println("Test Successful");
     }
 
+    //Screenshot of failed test case
     @After
-    public void tearDown(){
-        driver.close();
-        System.out.println("After");
-
+    public void tearDown(Scenario scenario) throws IOException {
+        if(scenario.isFailed()) {
+            File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            byte[] screenshotContent = FileUtils.readFileToByteArray(screenshot);
+            scenario.attach(screenshotContent, "image/png", "ScreenShot");
+            driver.close();
+            System.out.println("After");
+        }
     }
 
     @When("user enters a product in the search box")
     public void userEntersAProductInTheSearchBox(DataTable product) {
         amazonHomePage_pf.enterSearchBox(product.cell(0,0));
+    }
+
+    //Launching the browser defined in the feature file
+    @Given("amazon webpage is launched in {string}")
+    public void amazonWebpageIsLaunchedIn(String arg0) {
+        driver = driverManager.getBrowserDriver(arg0);
     }
 }
