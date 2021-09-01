@@ -1,3 +1,6 @@
+
+@Chrome
+
 Feature: Validate search functionality
 
   Background: users launches webpage

@@ -1,3 +1,6 @@
+
+@FireFox
+
 Feature: Validate search functionality
 
   Background: users launches webpage

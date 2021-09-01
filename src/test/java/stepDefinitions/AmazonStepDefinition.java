@@ -101,5 +101,7 @@ public class AmazonStepDefinition {
     @Given("amazon webpage is launched in {string}")
     public void amazonWebpageIsLaunchedIn(String arg0) {
         driver = driverManager.getBrowserDriver(arg0);
+        driver.get("https://www.amazon.in/");
+        amazonHomePage_pf = new AmazonHomePage_PF(driver);
     }
 }
